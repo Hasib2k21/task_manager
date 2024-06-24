@@ -39,7 +39,8 @@ dependencies:
   http:
   fluttertoast:
   pin_code_fields:
-  shared_preferences:   
+  shared_preferences:
+  cached_network_image: ^3.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
