@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/main/SplashScreen.dart';
-
-
-
-
+import 'package:get/get.dart';
+import 'package:task_manager/controller_binder.dart';
+import 'package:task_manager/ui/screens/auth/splash_screen.dart';
+import 'package:task_manager/ui/utility/app_colors.dart';
 
 class TaskManagerApp extends StatefulWidget {
-  static GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
   const TaskManagerApp({super.key});
+
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<TaskManagerApp> createState() => _TaskManagerAppState();
@@ -16,43 +16,45 @@ class TaskManagerApp extends StatefulWidget {
 class _TaskManagerAppState extends State<TaskManagerApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: TaskManagerApp.globalKey,
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Task Manager",
-      theme: ThemeData(
-          brightness: Brightness.light,
-        primarySwatch: Colors.teal,
-        inputDecorationTheme:  const InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          border: OutlineInputBorder(borderSide: BorderSide.none),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            )
-          )
+      navigatorKey: TaskManagerApp.navigatorKey,
+      home: const SplashScreen(),
+      theme: lightThemeData(),
+      initialBinding: ControllerBinder(),
+    );
+  }
 
+  ThemeData lightThemeData() {
+    return ThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: Colors.white,
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey.shade400),
+          border: const OutlineInputBorder(borderSide: BorderSide.none),
         ),
         textTheme: const TextTheme(
-          titleLarge: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 24,
-              color: Colors.black)
-        )
-      ),
-      darkTheme: ThemeData(
-          brightness: Brightness.dark
-      ),
-      themeMode: ThemeMode.light,
-
-      home: const SplashScreen(),
-
-    );
+            titleLarge: TextStyle(
+                fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+            titleSmall: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+                letterSpacing: 0.4)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.themeColor,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            foregroundColor: AppColors.white,
+            fixedSize: const Size.fromWidth(double.maxFinite),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.grey,
+                textStyle: const TextStyle(fontWeight: FontWeight.w600))));
   }
 }
